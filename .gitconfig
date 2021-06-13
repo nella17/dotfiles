@@ -1,0 +1,64 @@
+[user]
+  name = Allen Guan
+[color]
+  ui = auto
+[color "branch"]
+  current = yellow reverse
+  local = yellow
+  remote = green
+[color "diff"]
+  meta = yellow
+  frag = magenta
+  old = red
+  new = green
+  whitespace = red reverse
+[color "status"]
+  added = yellow
+  changed = green
+  untracked = cyan
+[core]
+  whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
+  excludesfile = ~/.gitignore_global
+  eol = lf
+  pager = less -MR
+  autocrlf = false
+  quotepath = false
+  editor = vim
+[alias]
+  co = checkout
+  cm = commit
+  unstage = reset HEAD --
+  last = log -1 HEAD
+  ll = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+  ll1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold yellow)(%ar)%C(auto)%d%C(reset)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+  ll2 = log --oneline --graph --decorate --all
+  in = "!git init; if [[ ! -f \"README.md\" ]]; then echo \"# ${PWD##*/}\" >> README.md; fi; if [[ ! -f \".gitignore\" ]]; then cp ~/.gitignore_template .gitignore; fi; git add README.md .gitignore"
+  ;update-fork = !git pull fork master
+  ;uf = update-fork
+[gui]
+  encoding = utf-8
+[i18n]
+  commitencoding = utf-8
+[pull]
+  ff = only
+[push]
+  default = current
+[diff]
+  tool = diff-vscode
+[difftool "diff-vscode"]
+  cmd = code --wait --diff \"$LOCAL\" \"$REMOTE\"
+[merge]
+  # ff = no
+  commit = yes
+  tool = merge-vscode
+[mergetool "merge-vscode"]
+  cmd = code --wait \"$MERGED\"
+[commit]
+  gpgsign = true
+[filter "lfs"]
+  required = true
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+[init]
+  defaultBranch = main

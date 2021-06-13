@@ -1,0 +1,28 @@
+set nocp nu rnu cul ru 
+set sc stal=2 ls=2 so=5
+set ts=4 sw=4 sts=4 et
+set ai cin si sta
+set hls sm is ic scs
+set wrap lbr
+filetype plugin indent on
+syntax enable
+set bg=dark
+set backspace=indent,eol,start
+
+let leader = '\'
+
+noremap ; :
+
+function! Toggle()
+    s,^\(\s*\)\?,\1// ,e
+    s,^\(\s*\)\(// \?\)\{2},\1,e
+endfunc
+
+au filetype c,cpp noremap <F9> :w<CR>:!run_c '%'<CR>
+au filetype c,cpp inoremap <F9> <ESC>:w<CR>:!run_c '%'<CR>
+au filetype c,cpp noremap <leader><leader> :call Toggle()<CR>
+
+set sb spr noswf
+set cb=unnamed
+set enc=utf-8 ff=unix
+set viminfo="NONE"

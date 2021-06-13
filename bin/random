@@ -1,0 +1,2 @@
+#!/bin/bash
+cat /dev/urandom | base64 | tr -d '/+' | head -c ${1:-32}

@@ -1,0 +1,152 @@
+" Vundle
+call plug#begin('~/.vim/plugged')
+" Nerdtree related
+Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdcommenter'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'ryanoasis/vim-devicons'
+Plug 'wincent/command-t'
+" Colorscheme
+Plug 'vim-airline/vim-airline'
+Plug 'joshdick/onedark.vim'
+" Coding Utils
+" Plug 'Yggdroot/indentLine'
+Plug 'luochen1990/rainbow'
+" coc
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+call plug#end()
+
+" for pane moving
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-H> <C-W><C-H>
+nnoremap <C-L> <C-W><C-L>
+
+" short custom config
+set nocp nu rnu cul noswf sc nosmd
+"set mouse=a
+au WinEnter * setl cul
+au WinLeave * setl nocul
+set sb spr stal=2 ru
+set cb=unnamed
+set ts=4 sw=4 sts=4 et
+set ai cin si sta
+set hls sm is ic scs
+set ls=2 so=5
+set enc=utf-8 ff=unix
+set wrap lbr
+" set viminfo='0,:0,<0,@0,f0
+set viminfo="NONE"
+set backspace=indent,eol,start
+filetype plugin indent on
+
+syntax enable
+try
+  colo onedark
+catch
+  colo torte
+endtry
+"set bg=dark
+hi Normal guibg=NONE ctermbg=NONE
+" transparent background
+" let t:is_transparent_background=0
+" fu! Change_Background()
+"   if t:is_transparent_background == 0
+"     hi Normal guibg=NONE ctermbg=NONE
+"     let t:is_transparent_background=1
+"   else
+"     colors onedark
+"     let t:is_transparent_background=0
+"   endif
+" endf
+" nnoremap <F1> :call Change_Background()<CR>
+
+"au BufRead,BufWritePre * if &modifiable | %retab!
+"au InsertLeave,BufWritePre * %s/\s\+$//e
+
+"set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
+"set list
+
+au Filetype c,cpp setlocal ts=4 sw=4 sts=4 et
+au Filetype python setlocal ts=4 sw=4 sts=4 et
+au Filetype javascript setlocal ts=2 sw=2 sts=2 et
+au Filetype sh setlocal ts=2 sw=2 sts=2 et
+au Filetype php setlocal ts=4 sw=4 sts=4 et
+
+au BufRead,BufNewFile *.sage set filetype=python
+
+function! Toggle_cpp()
+    s,^\(\s*\)\?,\1// ,e
+    s,^\(\s*\)\(// \?\)\{2},\1,e
+endfunc
+au filetype c,cpp noremap <leader><leader> :call Toggle_cpp()<CR>
+
+au Filetype c,cpp noremap <F9> :w<CR>:!run_c '%'<CR>
+au Filetype c,cpp inoremap <F9> <ESC>:w<CR>:!run_c '%'<CR>
+
+au Filetype python noremap <F5> :% w !python3<CR>
+au Filetype python inoremap <F5> <ESC>:% w !python3<CR>
+au Filetype python noremap <F9> :w<CR>:!python3 '%'<CR>
+au Filetype python inoremap <F9> <ESC>:w<CR>:!python3 '%'<CR>
+
+au Filetype javascript noremap <F5> :% w !node<CR>
+au Filetype javascript inoremap <F5> <ESC>:% w !node<CR>
+au Filetype javascript noremap <F9> :w<CR>:!node '%'<CR>
+au Filetype javascript inoremap <F9> <ESC>:w<CR>:!node '%'<CR>
+
+au Filetype sh noremap <F5> :% w !zsh<CR>
+au Filetype sh inoremap <F5> <ESC>:% w !zsh<CR>
+au Filetype sh noremap <F9> :w<CR>:!zsh '%'<CR>
+au Filetype sh inoremap <F9> <ESC>:w<CR>:!zsh '%'<CR>
+
+au Filetype php noremap <F5> :% w !php -a<CR>
+au Filetype php inoremap <F5> <ESC>:% w !php -a<CR>
+au Filetype php noremap <F9> :w<CR>:!php '%'<CR>
+au Filetype php inoremap <F9> <ESC>:w<CR>:!php '%'<CR>
+
+noremap ; :
+
+" airline
+let g:airline_powerline_fonts = 1
+let g:airline_detect_modified=1
+let g:airline_detect_paste=1
+"let g:airline#extensions#tabline#enabled = 1
+
+let g:NERDTreeGitStatusUseNerdFonts = 1
+" NERDTree
+noremap <C-n> :NERDTreeToggle<CR>
+" autocmd VimEnter * if exists(":NERDTree") | NERDTree | wincmd p
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif " Close on exit
+let NERDTreeMinimalUI=1
+let NERDTreeShowHidden=1
+" let NERDTreeChDirMode=3
+
+" https://github.com/preservim/nerdtree/issues/815
+" augroup nerdtree
+"   autocmd!
+"   autocmd FileType nerdtree syntax clear NERDTreeFlags
+"   autocmd FileType nerdtree syntax match hideBracketsInNerdTree "\]" contained conceal containedin=ALL
+"   autocmd FileType nerdtree syntax match hideBracketsInNerdTree "\[" contained conceal containedin=ALL
+"   autocmd FileType nerdtree setlocal conceallevel=3
+"   autocmd FileType nerdtree setlocal concealcursor=nvic
+" augroup END
+" let g:webdevicons_conceal_nerdtree_brackets = 0
+" let g:NERDTreeGitStatusConcealBrackets = 1
+
+" NERDCommenter
+let g:NERDSpaceDelims=1
+let g:NERDCompactSexyComs=1
+let g:NERDDefaultAlign='left'
+let g:NERDCommentEmptyLines=1
+let g:NERDTrimTrailingWhitespace=1
+let g:NERDToggleCheckAllLines=1
+
+" Indent Guide
+" let g:indentLine_setColors = 0
+" let g:indentLine_char_list=['|', '¦', '┆', '┊']
+
+" onedark colorscheme
+let g:onedark_termcolors=256
+
+" rainbow
+let g:rainbow_active=1
