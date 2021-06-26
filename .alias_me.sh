@@ -52,6 +52,8 @@ alias hopper='open -a "/Applications/Hopper Disassembler v4.app"'
 alias xcode_simulator_video='xcrun simctl io booted recordVideo'
 alias rc=run_c
 
-# coding
+# git
 alias git='hub'
+alias config='git --git-dir=$HOME/.dotfiles/.git/ --work-tree=$HOME'
+
 alias edit-hosts='sudo /usr/bin/vim --clean -Z /etc/hosts'
