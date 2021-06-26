@@ -155,6 +155,14 @@ export LC_ALL=en_US.UTF-8
 [ -f "${HOME}/.iterm2_shell_integration.zsh" ] && . "${HOME}/.iterm2_shell_integration.zsh"
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f "$HOME/google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/google-cloud-sdk/path.zsh.inc"; fi
+# The next line enables shell command completion for gcloud.
+if [ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/google-cloud-sdk/completion.zsh.inc"; fi
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+
 export PATH="/usr/local/opt/ruby/bin:$PATH"
 export PATH="$PATH:/usr/local/sbin"
 export PATH="$PATH:/usr/local/opt/binutils/bin"
@@ -163,12 +171,6 @@ export PATH="$PATH:$HOME/.cargo/bin"
 export PATH="$PATH:$HOME/project/tools/john/run"
 alias john="$(which john)"
 export PATH="$PATH:/opt/metasploit-framework/bin"
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '$HOME/google-cloud-sdk/path.zsh.inc' ]; then . '$HOME/google-cloud-sdk/path.zsh.inc'; fi
-export PATH=$HOME/google-cloud-sdk/bin:$PATH
-# The next line enables shell command completion for gcloud.
-if [ -f '$HOME/google-cloud-sdk/completion.zsh.inc' ]; then . '$HOME/google-cloud-sdk/completion.zsh.inc'; fi
 
 # export PATH="/Applications/IDA Pro 7.0/idabin:$PATH"
 
