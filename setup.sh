@@ -8,8 +8,15 @@ dotfiles checkout
 if [ $? != 0 ]; then
   d=$HOME/.old-config
   mkdir $d
-  dotfiles checkout 2>&1 | tail -n +2 | head -n -2 | awk {'print $1'} | xargs -I{} mv $HOME/{} $d/{}
+  dotfiles checkout 2>&1 | tail -n +3 | head -n -2 | while read f; do
+    mkdir -p $d/$f
+    mv $HOME/$f $d/$f
+  done
+  exit
   dotfiles checkout
 fi
 dotfiles config status.showUntrackedFiles no
-cat .gitignore_home | git update-index --assume-unchanged --stdin
+cat $HOME/.gitignore_home | while read f; do
+  rm $HOME/$f
+  dotfiles update-index --assume-unchanged $HOME/$f
+done
