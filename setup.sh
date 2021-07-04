@@ -16,6 +16,6 @@ if [ $? != 0 ]; then
 fi
 dotfiles config status.showUntrackedFiles no
 cat $HOME/.gitignore_home | while read f; do
-  rm $HOME/$f
+  rm -f $HOME/$f
   dotfiles update-index --assume-unchanged $HOME/$f
 done

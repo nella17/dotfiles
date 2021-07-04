@@ -43,6 +43,13 @@ if command -v hub &> /dev/null; then
   alias git='hub'
 fi
 alias dotfiles='git --git-dir=$HOME/.dotfiles/.git/ --work-tree=$HOME'
+function dotfiles-update() {
+  dotfiles pull
+  cat $HOME/.gitignore_home | while read f; do
+    rm -f $HOME/$f
+    dotfiles update-index --assume-unchanged $HOME/$f
+  done
+}
 
 alias edit-hosts='sudo /usr/bin/vim --clean -Z /etc/hosts'
 
