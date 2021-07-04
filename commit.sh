@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -x
-fn=.gitignore_home
-cat $fn | git update-index --no-assume-unchanged --stdin
-git add -f `cat $fn`
+files=$(ls -1a | grep -v '^\(\.\{1,2\}\|\.git\)$' | tee .gitignore_home)
+git reset
+git update-index --no-assume-unchanged $files
+git add -f $files
 git commit
-cat $fn | git update-index --assume-unchanged --stdin
+git update-index --assume-unchanged $files

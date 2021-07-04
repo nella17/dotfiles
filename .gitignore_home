@@ -1,4 +1,4 @@
 .gitignore_home
-setup.sh
-commit.sh
 README.md
+commit.sh
+setup.sh

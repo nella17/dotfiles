@@ -12,7 +12,6 @@ if [ $? != 0 ]; then
     mkdir -p $d/$f
     mv $HOME/$f $d/$f
   done
-  exit
   dotfiles checkout
 fi
 dotfiles config status.showUntrackedFiles no
