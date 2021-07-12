@@ -15,7 +15,7 @@ sudo apt install -y tmux vim curl mtr net-tools unzip zip ncat wireguard nmap gi
 curl -sL git.io/nella17-setup.sh | bash
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
 nvm install --lts
-vim -c 'PlugInstall | qa!'
+vim +PlugInstall +qall
 zsh ~/.zim/zimfw.zsh install
 chsh -s `which zsh`
 ```
