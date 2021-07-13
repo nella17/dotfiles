@@ -39,11 +39,9 @@ alias t-internet='ping -o 1.1.1.1'
 alias rc=run_c
 
 # git
-if command -v hub &> /dev/null; then
-  alias git='hub'
-fi
 alias dotfiles='git --git-dir=$HOME/.dotfiles/.git/ --work-tree=$HOME'
 function dotfiles-update() {
+  dotfiles reset HEAD --hard
   dotfiles pull
   cat $HOME/.gitignore_home | while read f; do
     rm -f $HOME/$f

@@ -149,8 +149,9 @@ export HOMEBREW_NO_ANALYTICS=1
 export HOMEBREW_NO_AUTO_UPDATE=1
 export HOMEBREW_UPDATE_REPORT_ONLY_INSTALLED=1
 
-#export LC_CTYPE=C
 export LC_ALL=en_US.UTF-8
+
+autoload -U compinit && compinit -i
 
 [ -f "${HOME}/.iterm2_shell_integration.zsh" ] && . "${HOME}/.iterm2_shell_integration.zsh"
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
@@ -167,16 +168,20 @@ else
     [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 fi
 
-export PATH="/usr/local/opt/ruby/bin:$PATH"
-export PATH="$PATH:/usr/local/sbin"
-export PATH="$PATH:/usr/local/opt/binutils/bin"
-export PATH="$PATH:$HOME/go/bin"
-export PATH="$PATH:$HOME/.cargo/bin"
-export PATH="$PATH:$HOME/project/tools/john/run"
-alias john="$(which john)"
-export PATH="$PATH:/opt/metasploit-framework/bin"
-
-# export PATH="/Applications/IDA Pro 7.0/idabin:$PATH"
+# macOS only
+if [ "$(uname -s)" = "Darwin" ]; then
+    export PATH="/usr/local/opt/ruby/bin:$PATH"
+    export PATH="$PATH:/usr/local/sbin"
+    export PATH="$PATH:/usr/local/opt/binutils/bin"
+    export PATH="$PATH:$HOME/go/bin"
+    export PATH="$PATH:$HOME/.cargo/bin"
+    export PATH="$PATH:$HOME/project/tools/john/run"
+    alias john="$(which john)"
+    export PATH="$PATH:/opt/metasploit-framework/bin"
+    # export PATH="/Applications/IDA Pro 7.0/idabin:$PATH"
+    export PATH="$HOME/project/bin:$PATH"
+fi
 
 source ~/.alias_me.sh
-export PATH="$HOME/bin:$HOME/.local/bin:$HOME/project/bin:$PATH"
+export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+
