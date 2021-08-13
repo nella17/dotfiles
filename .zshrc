@@ -171,6 +171,7 @@ fi
 # macOS only
 if [ "$(uname -s)" = "Darwin" ]; then
     export PATH="/usr/local/opt/ruby/bin:$PATH"
+    export PATH="/usr/local/lib/ruby/gems/3.0.0/bin:$PATH"
     export PATH="$PATH:/usr/local/sbin"
     export PATH="$PATH:/usr/local/opt/binutils/bin"
     export PATH="$PATH:$HOME/go/bin"
