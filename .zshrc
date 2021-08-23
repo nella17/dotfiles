@@ -183,7 +183,7 @@ if [ "$(uname -s)" = "Darwin" ]; then
     export PATH="$HOME/project/bin:$PATH"
 fi
 
-source ~/.alias_me.sh
+source ~/.alias.sh
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
 if [[ "$VIRTUAL_ENV" ]]; then

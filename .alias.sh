@@ -28,8 +28,8 @@ function rv() {
 }
 
 # alias
-alias aaa='vi ~/.alias_me.sh && ra'
-alias ra='source ~/.alias_me.sh'
+alias aaa='vi ~/.alias.sh && ra'
+alias ra='source ~/.alias.sh'
 
 # network
 alias t-ssh-github='ssh -T git@github.com'
