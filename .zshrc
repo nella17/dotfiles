@@ -186,3 +186,7 @@ fi
 source ~/.alias_me.sh
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
+if [[ "$VIRTUAL_ENV" ]]; then
+    export PATH="$VIRTUAL_ENV/bin:$PATH"
+fi
+
