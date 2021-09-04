@@ -12,15 +12,19 @@ set backspace=indent,eol,start
 let leader = '\'
 
 noremap ; :
+noremap <C-l> :nohl<CR>
 
 function! Toggle()
     s,^\(\s*\)\?,\1// ,e
     s,^\(\s*\)\(// \?\)\{2},\1,e
 endfunc
 
-au filetype c,cpp noremap <F9> :w<CR>:!run_c '%'<CR>
+au filetype c,cpp  noremap <F9> <ESC>:w<CR>:!run_c '%'<CR>
 au filetype c,cpp inoremap <F9> <ESC>:w<CR>:!run_c '%'<CR>
 au filetype c,cpp noremap <leader><leader> :call Toggle()<CR>
+
+au filetype python  noremap <F9> <ESC>:w<CR>:!python3 '%'<CR>
+au filetype python inoremap <F9> <ESC>:w<CR>:!python3 '%'<CR>
 
 set sb spr noswf
 set cb=unnamed

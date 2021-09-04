@@ -81,30 +81,31 @@ function! Toggle_cpp()
 endfunc
 au filetype c,cpp noremap <leader><leader> :call Toggle_cpp()<CR>
 
-au Filetype c,cpp noremap <F9> :w<CR>:!run_c '%'<CR>
+au Filetype c,cpp  noremap <F9> <ESC>:w<CR>:!run_c '%'<CR>
 au Filetype c,cpp inoremap <F9> <ESC>:w<CR>:!run_c '%'<CR>
 
-au Filetype python noremap <F5> :% w !python3<CR>
+au Filetype python  noremap <F5> <ESC>:% w !python3<CR>
 au Filetype python inoremap <F5> <ESC>:% w !python3<CR>
-au Filetype python noremap <F9> :w<CR>:!python3 '%'<CR>
+au Filetype python  noremap <F9> <ESC>:w<CR>:!python3 '%'<CR>
 au Filetype python inoremap <F9> <ESC>:w<CR>:!python3 '%'<CR>
 
-au Filetype javascript noremap <F5> :% w !node<CR>
+au Filetype javascript  noremap <F5> <ESC>:% w !node<CR>
 au Filetype javascript inoremap <F5> <ESC>:% w !node<CR>
-au Filetype javascript noremap <F9> :w<CR>:!node '%'<CR>
+au Filetype javascript  noremap <F9> <ESC>:w<CR>:!node '%'<CR>
 au Filetype javascript inoremap <F9> <ESC>:w<CR>:!node '%'<CR>
 
-au Filetype sh noremap <F5> :% w !zsh<CR>
+au Filetype sh  noremap <F5> <ESC>:% w !zsh<CR>
 au Filetype sh inoremap <F5> <ESC>:% w !zsh<CR>
-au Filetype sh noremap <F9> :w<CR>:!zsh '%'<CR>
+au Filetype sh  noremap <F9> <ESC>:w<CR>:!zsh '%'<CR>
 au Filetype sh inoremap <F9> <ESC>:w<CR>:!zsh '%'<CR>
 
-au Filetype php noremap <F5> :% w !php -a<CR>
+au Filetype php  noremap <F5> <ESC>:% w !php -a<CR>
 au Filetype php inoremap <F5> <ESC>:% w !php -a<CR>
-au Filetype php noremap <F9> :w<CR>:!php '%'<CR>
+au Filetype php  noremap <F9> <ESC>:w<CR>:!php '%'<CR>
 au Filetype php inoremap <F9> <ESC>:w<CR>:!php '%'<CR>
 
 noremap ; :
+noremap <C-l> :nohl<CR>
 
 " airline
 let g:airline_powerline_fonts = 1
