@@ -16,12 +16,6 @@ Plug 'luochen1990/rainbow'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
-" for pane moving
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-H> <C-W><C-H>
-nnoremap <C-L> <C-W><C-L>
-
 " short custom config
 set nocp nu rnu cul noswf sc nosmd
 "set mouse=a
