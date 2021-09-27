@@ -12,8 +12,8 @@ Plug 'joshdick/onedark.vim'
 " Coding Utils
 " Plug 'Yggdroot/indentLine'
 Plug 'luochen1990/rainbow'
-" coc
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'editorconfig/editorconfig-vim'
 call plug#end()
 
 " short custom config
