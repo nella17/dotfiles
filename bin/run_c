@@ -2,6 +2,11 @@
 set -euo pipefail
 fn=${1?"need file name"}
 
+CC=g++
+if [ "$(uname -s)" = "Darwin" ]; then
+  CC=g++-11
+fi
+
 ARGS=''
 DEBUG=0
 if [ $# = 1 ] || [ $2 = true ] || [ $2 = 1 ]; then
@@ -30,7 +35,8 @@ INCLUDE="-I$HOME/project/tools/include -I$HOME/project/tools/boost_1_73_0 -I/usr
 if [ -e "$file" ] && [ $DEBUG = 0 ]; then
   >&2 echo "cached file exist!"
 else
-  time /usr/local/bin/g++-11 $ARGS $INCLUDE -Wall -Wextra -Wshadow "$fn" -o "$file"
+  set -eux
+  time $CC $ARGS $INCLUDE -Wall -Wextra -Wshadow -Wconversion "$fn" -o "$file"
 fi
 >&2 echo 
 time "$file"
