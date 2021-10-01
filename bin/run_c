@@ -32,7 +32,7 @@ INCLUDE="-I$HOME/project/tools/include -I$HOME/project/tools/boost_1_73_0 -I/usr
 
 >&2 echo \$ARGS=\'"$ARGS"\'
 >&2 echo $file
-if [ -e "$file" ] && [ $DEBUG = 0 ]; then
+if [ -e "$file" ]; then
   >&2 echo "cached file exist!"
 else
   set -eux
