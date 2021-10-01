@@ -17,7 +17,7 @@ done
 args="${args[@]}"
 
 cmd="sage $@"
-if [ "$1" = "bash" ] || [[ "$1" == "sage*" ]]; then
+if [ "$1" = "bash" ] || [[ "$1" == sage* ]]; then
   cmd="$@"
 fi
 
