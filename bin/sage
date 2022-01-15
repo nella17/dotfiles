@@ -34,7 +34,8 @@ if [[ ! $exist ]] && [[ $already_run -eq 0 ]]; then
     -v "$PWD:/data" \
     $args \
     sagemath/sagemath
-    docker exec -it $name bash -c "echo '%colors Linux' >> \$HOME/.sage/init.sage"
+  sleep 0.1
+  docker exec -it $name bash -c "echo '%colors Linux' >> \$HOME/.sage/init.sage"
 fi
 
 docker exec -it -w '/data' $name sage-entrypoint $cmd
