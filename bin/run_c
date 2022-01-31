@@ -1,10 +1,15 @@
 #!/bin/bash
 set -euo pipefail
 fn=${1?"need file name"}
+if [ ${fn##*.} = "c" ]; then
+  is_c=1
+  CC=gcc
+else
+  CC=g++
+fi
 
-CC=g++
 if [ "$(uname -s)" = "Darwin" ]; then
-  CC=g++-11
+  CC=$CC-11
 fi
 
 ARGS=''
@@ -20,7 +25,12 @@ if [ $# -ge 3 ]; then
   ARGS="${ARGS:+$ARGS }$(echo $* | cut -d ' ' -f 3-)"
 fi
 if ! [[ "$ARGS" =~ "-std=" ]]; then
-  ARGS="${ARGS:+$ARGS }-std=c++17"
+  if [ -n $is_c ]; then
+    std="c11"
+  else
+    std="c++17"
+  fi
+  ARGS="${ARGS:+$ARGS }-std=$std"
 fi
 
 file_name="$(sha1sum "$1" | awk '{print $1}')-$(echo $ARGS | sha1sum | awk '{print $1}').out"
@@ -28,15 +38,15 @@ dir='/tmp/run_c'
 mkdir -p $dir
 file="$dir/$file_name"
 
-INCLUDE="-I$HOME/project/tools/include -I$HOME/project/tools/boost_1_73_0 -I/usr/local/include"
-
 >&2 echo \$ARGS=\'"$ARGS"\'
 >&2 echo $file
 if [ -e "$file" ]; then
   time >&2 echo "cached file exist!"
 else
   set -eux
-  time $CC $ARGS $INCLUDE -Wall -Wextra -Wshadow -Wconversion "$fn" -o "$file"
+  time $CC $ARGS -Wall -Wextra -Wshadow \
+    -Wconversion "$fn" -o "$file" \
+    # -fsanitize=address -fsanitize=undefined
 fi
 >&2 echo 
 time "$file"
