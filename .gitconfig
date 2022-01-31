@@ -25,6 +25,7 @@
   quotepath = false
   editor = vim
 [alias]
+  s = status -s
   co = checkout
   cm = commit
   unstage = reset HEAD --
