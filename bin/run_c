@@ -5,6 +5,7 @@ if [ ${fn##*.} = "c" ]; then
   is_c=1
   CC=gcc
 else
+  is_c=0
   CC=g++
 fi
 
@@ -25,7 +26,7 @@ if [ $# -ge 3 ]; then
   ARGS="${ARGS:+$ARGS }$(echo $* | cut -d ' ' -f 3-)"
 fi
 if ! [[ "$ARGS" =~ "-std=" ]]; then
-  if [ -n $is_c ]; then
+  if [ -z $is_c ]; then
     std="c11"
   else
     std="c++17"
