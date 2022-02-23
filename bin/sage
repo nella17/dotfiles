@@ -16,9 +16,9 @@ while [[ $# -gt 0 ]]; do
 done
 args="${args[@]}"
 
-cmd="sage $@"
+cmd="sage "$@
 if [ "$1" = "bash" ] || [[ "$1" == sage* ]]; then
-  cmd="$@"
+  cmd=$@
 fi
 
 >&2 echo name: $name
