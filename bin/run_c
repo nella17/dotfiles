@@ -10,31 +10,41 @@ else
 fi
 
 if [ "$(uname -s)" = "Darwin" ]; then
-  CC=$CC-11
+  if command -v $CC-11 &> /dev/null; then
+    CC=$CC-11
+  fi
 fi
 
-ARGS=''
+ARGS=()
 DEBUG=0
-if [ $# = 1 ] || [ $2 = true ] || [ $2 = 1 ]; then
+if [ ${2:-1} -ge 1 ]; then
   DEBUG=1
-  ARGS="${ARGS:+$ARGS }-DDEBUG"
+  ARGS+=("-DDEBUG")
   # if ! [[ "$ARGS" =~ "-O" ]]; then
-  #     ARGS="${ARGS:+$ARGS }-Og"
+  #     ARGS+=("-Og")
   # fi
 fi
-if [ $# -ge 3 ]; then
-  ARGS="${ARGS:+$ARGS }$(echo $* | cut -d ' ' -f 3-)"
+if [ ${2:-0} -ge 2 ]; then
+  ARGS+=("-fsanitize=address" "-fsanitize=undefined")
 fi
-if ! [[ "$ARGS" =~ "-std=" ]]; then
+
+OPT=""
+if [ $# -ge 3 ]; then
+  OPT="$(echo $* | cut -d ' ' -f 3-)"
+fi
+
+if ! [[ "$OPT" =~ "-std=" ]]; then
   if [ -z $is_c ]; then
     std="c11"
   else
     std="c++17"
   fi
-  ARGS="${ARGS:+$ARGS }-std=$std"
+  ARGS+=("-std=$std")
 fi
 
-file_name="$(sha1sum "$1" | awk '{print $1}')-$(echo $ARGS | sha1sum | awk '{print $1}').out"
+ARGS="${ARGS[*]} $OPT"
+
+file_name="$(sha1sum "$1" | awk '{print $1}')-$(echo "$ARGS" | sha1sum | awk '{print $1}').out"
 dir='/tmp/run_c'
 mkdir -p $dir
 file="$dir/$file_name"
@@ -46,8 +56,7 @@ if [ -e "$file" ]; then
 else
   set -eux
   time $CC $ARGS -Wall -Wextra -Wshadow \
-    -Wconversion "$fn" -o "$file" \
-    # -fsanitize=address -fsanitize=undefined
+    -Wconversion "$fn" -o "$file"
 fi
 >&2 echo 
 time "$file"
