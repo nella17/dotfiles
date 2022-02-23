@@ -16,10 +16,16 @@ while [[ $# -gt 0 ]]; do
 done
 args="${args[@]}"
 
-cmd="python $@"
-if [ "$1" == "bash" ]; then
-  cmd="$@"
+if [ "$1" = "bash" ]; then
+  cmd=()
+else
+  cmd=("python")
 fi
+for x in "$@"; do
+  x="$(echo "$x" | sed 's/"/\\"/g')"
+  cmd+=("\"$x\"")
+done
+cmd="${cmd[@]}"
 
 >&2 echo name: $name
 >&2 echo args: $args
