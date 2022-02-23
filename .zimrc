@@ -25,4 +25,4 @@ zmodule zsh-users/zsh-syntax-highlighting
 zmodule zsh-users/zsh-history-substring-search
 
 zmodule romkatv/powerlevel10k
-zmodule zdharma/history-search-multi-word
+zmodule zdharma-continuum/history-search-multi-word
