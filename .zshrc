@@ -166,6 +166,7 @@ if [ "$(uname -s)" = "Darwin" ]; then
     [ -f "${HOME}/.iterm2_shell_integration.zsh" ] && . "${HOME}/.iterm2_shell_integration.zsh"
     [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 
+    export PATH="/usr/local/opt/zip/bin:$PATH"
     export PATH="/usr/local/opt/ruby/bin:$PATH"
     export PATH="/usr/local/lib/ruby/gems/3.0.0/bin:$PATH"
     export PATH="$PATH:/usr/local/sbin"
@@ -185,4 +186,3 @@ export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 if [[ "$VIRTUAL_ENV" ]]; then
     export PATH="$VIRTUAL_ENV/bin:$PATH"
 fi
-
