@@ -1,2 +1,9 @@
 #!/bin/bash
-cat /dev/urandom | base64 | tr -d '/+' | head -c ${1:-32}
+# set -x
+f='@'
+if [ ${1:-''} = 'hex' ]; then
+  f='-C 0123456789abcdef'
+  shift
+fi
+c=${1:-32}
+cat /dev/urandom | base64 | tr -d '/+' | tr -d $f | head -c $c
