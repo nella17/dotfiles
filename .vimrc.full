@@ -77,6 +77,8 @@ au filetype c,cpp noremap <leader><leader> :call Toggle_cpp()<CR>
 
 au Filetype c,cpp  noremap <F9> <ESC>:w<CR>:!run_c '%'<CR>
 au Filetype c,cpp inoremap <F9> <ESC>:w<CR>:!run_c '%'<CR>
+au Filetype c,cpp  noremap <F10> <ESC>:w<CR>:!run_c '%' 2<CR>
+au Filetype c,cpp inoremap <F10> <ESC>:w<CR>:!run_c '%' 2<CR>
 
 au Filetype python  noremap <F5> <ESC>:% w !python3<CR>
 au Filetype python inoremap <F5> <ESC>:% w !python3<CR>

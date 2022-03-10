@@ -19,10 +19,7 @@ ARGS=()
 DEBUG=0
 if [ ${2:-1} -ge 1 ]; then
   DEBUG=1
-  ARGS+=("-DDEBUG")
-  # if ! [[ "$ARGS" =~ "-O" ]]; then
-  #     ARGS+=("-Og")
-  # fi
+  ARGS+=("-DDEBUG" "-D_GLIBCXX_DEBUG")
 fi
 if [ ${2:-0} -ge 2 ]; then
   ARGS+=("-fsanitize=address" "-fsanitize=undefined")
