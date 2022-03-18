@@ -1,0 +1,4 @@
+#!/bin/bash
+set -eux
+time kotlinc -include-runtime -d /tmp/run.jar $@
+time java -jar /tmp/run.jar

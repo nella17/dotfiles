@@ -14,6 +14,8 @@ Plug 'joshdick/onedark.vim'
 Plug 'luochen1990/rainbow'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'editorconfig/editorconfig-vim'
+"
+Plug 'udalov/kotlin-vim'
 call plug#end()
 
 " short custom config
@@ -99,6 +101,9 @@ au Filetype php  noremap <F5> <ESC>:% w !php -a<CR>
 au Filetype php inoremap <F5> <ESC>:% w !php -a<CR>
 au Filetype php  noremap <F9> <ESC>:w<CR>:!php '%'<CR>
 au Filetype php inoremap <F9> <ESC>:w<CR>:!php '%'<CR>
+
+au Filetype kotlin  noremap <F9> <ESC>:w<CR>:!run_kt '%'<CR>
+au Filetype kotlin inoremap <F9> <ESC>:w<CR>:!run_kt '%'<CR>
 
 noremap ; :
 noremap <C-l> :nohl<CR>
