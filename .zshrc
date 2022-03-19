@@ -141,10 +141,6 @@ zprompt_theme='powerlevel10k'
 setopt clobber
 setopt NULL_GLOB
 
-export HOMEBREW_NO_ANALYTICS=1
-export HOMEBREW_NO_AUTO_UPDATE=1
-export HOMEBREW_UPDATE_REPORT_ONLY_INSTALLED=1
-
 export LC_ALL=en_US.UTF-8
 
 autoload -U compinit && compinit -i
@@ -163,6 +159,12 @@ fi
 
 # macOS only
 if [ "$(uname -s)" = "Darwin" ]; then
+    export HOMEBREW_NO_ANALYTICS=1
+    export HOMEBREW_NO_AUTO_UPDATE=1
+    export HOMEBREW_NO_ENV_HINTS=1
+    export HOMEBREW_UPDATE_REPORT_ONLY_INSTALLED=1
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+
     [ -f "${HOME}/.iterm2_shell_integration.zsh" ] && . "${HOME}/.iterm2_shell_integration.zsh"
     [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 
