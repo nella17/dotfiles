@@ -151,27 +151,35 @@ if [ -f "$HOME/google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/google-cloud-sdk/
 if [ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/google-cloud-sdk/completion.zsh.inc"; fi
 
 export NVM_DIR="$HOME/.nvm"
-if [ "$(uname -s)" = "Darwin" ]; then
-    [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"
-else
+if [ "$(uname -s)" != "Darwin" ]; then
     [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-fi
-
+else
 # macOS only
-if [ "$(uname -s)" = "Darwin" ]; then
     export HOMEBREW_NO_ANALYTICS=1
     export HOMEBREW_NO_AUTO_UPDATE=1
     export HOMEBREW_NO_ENV_HINTS=1
     export HOMEBREW_UPDATE_REPORT_ONLY_INSTALLED=1
-    eval "$(/opt/homebrew/bin/brew shellenv)"
+
+    if [ "$(uname -p)" = "arm" ]; then
+        export HOMEBREW_PREFIX="/opt/homebrew";
+        export HOMEBREW_CELLAR="/opt/homebrew/Cellar";
+        export HOMEBREW_REPOSITORY="/opt/homebrew";
+        export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}";
+        export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:";
+        export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}";
+    else
+        export HOMEBREW_PREFIX="/usr/local"
+        export PATH="/usr/local/sbin${PATH+:$PATH}"
+    fi
+
+    [ -s "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" ] && . "$HOMEBREW_PREFIX/opt/nvm/nvm.sh"
 
     [ -f "${HOME}/.iterm2_shell_integration.zsh" ] && . "${HOME}/.iterm2_shell_integration.zsh"
-    [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
+    [ -f $HOMEBREW_PREFIX/etc/profile.d/autojump.sh ] && . $HOMEBREW_PREFIX/etc/profile.d/autojump.sh
 
-    export PATH="/usr/local/opt/zip/bin:$PATH"
-    export PATH="/usr/local/opt/ruby/bin:$PATH"
-    export PATH="/usr/local/lib/ruby/gems/3.0.0/bin:$PATH"
-    export PATH="$PATH:/usr/local/sbin"
+    export PATH="$HOMEBREW_PREFIX/opt/zip/bin:$PATH"
+    export PATH="$HOMEBREW_PREFIX/opt/ruby/bin:$PATH"
+    export PATH="$HOMEBREW_PREFIX/lib/ruby/gems/3.0.0/bin:$PATH"
     export PATH="$PATH:/usr/local/opt/binutils/bin"
     export PATH="$PATH:$HOME/go/bin"
     export PATH="$PATH:$HOME/.cargo/bin"
