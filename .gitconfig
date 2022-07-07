@@ -34,26 +34,12 @@
     ll1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold yellow)(%ar)%C(auto)%d%C(reset)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
     ll2 = log --oneline --graph --decorate --all
     in = "!git init; if [[ ! -f \"README.md\" ]]; then echo \"# ${PWD##*/}\" >> README.md; fi; if [[ ! -f \".gitignore\" ]]; then cp ~/.gitignore_template .gitignore; fi; git add README.md .gitignore"
-    ;update-fork = !git pull fork master
-    ;uf = update-fork
-[gui]
-    encoding = utf-8
 [i18n]
     commitencoding = utf-8
 [pull]
     ff = only
 [push]
     default = current
-[diff]
-    tool = diff-vscode
-[difftool "diff-vscode"]
-    cmd = code --wait --diff \"$LOCAL\" \"$REMOTE\"
-[merge]
-# ff = no
-    commit = yes
-    tool = merge-vscode
-[mergetool "merge-vscode"]
-    cmd = code --wait \"$MERGED\"
 [commit]
     gpgsign = true
 [filter "lfs"]
