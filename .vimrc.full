@@ -70,6 +70,7 @@ au Filetype sh setlocal ts=2 sw=2 sts=2 et
 au Filetype php setlocal ts=4 sw=4 sts=4 et
 
 au BufRead,BufNewFile *.sage set filetype=python
+au BufRead,BufNewFile *.conf set filetype=conf
 
 function! Toggle_cpp()
     s,^\(\s*\)\?,\1// ,e
