@@ -10,12 +10,12 @@ else
 fi
 
 if [ "$(uname -s)" = "Darwin" ]; then
-  if command -v $CC-11 &> /dev/null; then
-    CC=$CC-11
+  if command -v $CC-12 &> /dev/null; then
+    CC=$CC-12
   fi
 fi
 
-ARGS=()
+ARGS=("")
 DEBUG=0
 if [ ${2:-1} -ge 1 ]; then
   DEBUG=1
