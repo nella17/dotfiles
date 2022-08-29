@@ -1,6 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -euo pipefail
 fn=${1?"need file name"}
+o=${2:-2}
+
 if [ ${fn##*.} = "c" ]; then
   is_c=1
   CC=gcc
@@ -17,13 +19,18 @@ fi
 
 ARGS=("")
 DEBUG=0
-if [ ${2:-1} -ge 1 ]; then
-  DEBUG=1
-  ARGS+=("-DDEBUG" "-D_GLIBCXX_DEBUG" "-D_GLIBCXX_DEBUG_PEDANTIC" "-D_GLIBCXX_DEBUG_PEDANTIC_ASSERT")
-fi
-if [ ${2:-0} -ge 2 ]; then
+case $o in
+3)
   ARGS+=("-fsanitize=address" "-fsanitize=undefined")
-fi
+  ;&
+2)
+  DEBUG=1
+  ARGS+=("-DDEBUG")
+  ;&
+1)
+  ARGS+=("-D_GLIBCXX_DEBUG" "-D_GLIBCXX_DEBUG_PEDANTIC")
+  ;&
+esac
 
 OPT=""
 if [ $# -ge 3 ]; then
