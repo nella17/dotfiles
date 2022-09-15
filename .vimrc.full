@@ -12,7 +12,9 @@ Plug 'joshdick/onedark.vim'
 " Coding Utils
 " Plug 'Yggdroot/indentLine'
 Plug 'luochen1990/rainbow'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+if executable("node")
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+endif
 Plug 'editorconfig/editorconfig-vim'
 "
 Plug 'udalov/kotlin-vim'
