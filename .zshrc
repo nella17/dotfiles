@@ -216,6 +216,15 @@ if type nvm > /dev/null; then
     load-nvmrc
 fi
 
+if type asdf > /dev/null; then
+    . /opt/homebrew/opt/asdf/libexec/asdf.sh
+    source "${XDG_CONFIG_HOME:-$HOME/.config}/asdf-direnv/zshrc"
+fi
+
+if type direnv > /dev/null; then
+        eval "$(direnv hook zsh)"
+fi
+
 source ~/.alias.sh
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
