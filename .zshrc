@@ -181,10 +181,8 @@ else
     [ -f "${HOME}/.iterm2_shell_integration.zsh" ] && . "${HOME}/.iterm2_shell_integration.zsh"
     [ -f $HOMEBREW_PREFIX/etc/profile.d/autojump.sh ] && . $HOMEBREW_PREFIX/etc/profile.d/autojump.sh
 
-    export PATH="$HOMEBREW_PREFIX/opt/zip/bin:$PATH"
-    export PATH="$HOMEBREW_PREFIX/opt/ruby/bin:$PATH"
-    export PATH="$HOMEBREW_PREFIX/lib/ruby/gems/3.0.0/bin:$PATH"
-    export PATH="$PATH:/usr/local/opt/binutils/bin"
+    export PATH="$PATH:$HOMEBREW_PREFIX/opt/binutils/bin"
+
     export PATH="$PATH:$HOME/go/bin"
     export PATH="$PATH:$HOME/.cargo/bin"
     export PATH="$PATH:$HOME/project/tools/john/run"
@@ -216,13 +214,11 @@ if type nvm > /dev/null; then
     load-nvmrc
 fi
 
-if type asdf > /dev/null; then
-    . /opt/homebrew/opt/asdf/libexec/asdf.sh
-    source "${XDG_CONFIG_HOME:-$HOME/.config}/asdf-direnv/zshrc"
-fi
-
 if type direnv > /dev/null; then
-        eval "$(direnv hook zsh)"
+    eval "$(direnv hook zsh)"
+    if type asdf > /dev/null; then
+        source "${XDG_CONFIG_HOME:-$HOME/.config}/asdf-direnv/zshrc"
+    fi
 fi
 
 source ~/.alias.sh
