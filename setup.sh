@@ -10,7 +10,7 @@ if [ $? != 0 ]; then
   d=$HOME/.old-config
   mkdir $d
   dotfiles checkout 2>&1 | tail -n +3 | head -n -2 | while read f; do
-    mkdir -p $d/$f
+    mkdir -p $(dirname $d/$f)
     mv $HOME/$f $d/$f
   done
   dotfiles checkout
