@@ -9,6 +9,8 @@ Plug 'wincent/command-t'
 " Colorscheme
 Plug 'vim-airline/vim-airline'
 Plug 'joshdick/onedark.vim'
+" fuzz
+Plug 'ctrlpvim/ctrlp.vim'
 " Coding Utils
 " Plug 'Yggdroot/indentLine'
 Plug 'luochen1990/rainbow'
