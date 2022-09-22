@@ -5,7 +5,6 @@ Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/nerdcommenter'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'ryanoasis/vim-devicons'
-Plug 'wincent/command-t'
 " Colorscheme
 Plug 'vim-airline/vim-airline'
 Plug 'joshdick/onedark.vim'
@@ -15,7 +14,7 @@ Plug 'ctrlpvim/ctrlp.vim'
 " Plug 'Yggdroot/indentLine'
 Plug 'luochen1990/rainbow'
 if executable("node")
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    Plug 'neoclide/coc.nvim', {'commit': 'bdf75ab'}
 endif
 Plug 'editorconfig/editorconfig-vim'
 "
@@ -152,12 +151,11 @@ let g:NERDToggleCheckAllLines=1
 " CoC
 if executable("node")
     inoremap <silent><expr> <TAB>
-          \ coc#pum#visible() ? coc#pum#next(1) :
-          \ CheckBackspace() ? "\<Tab>" :
+          \ pumvisible() ? "\<C-n>" :
+          \ CheckBackspace() ? "\<TAB>" :
           \ coc#refresh()
-    inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
-    inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
-                                  \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+    inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
     function! CheckBackspace() abort
       let col = col('.') - 1
       return !col || getline('.')[col - 1]  =~# '\s'
