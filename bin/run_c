@@ -38,7 +38,7 @@ if [ $# -ge 3 ]; then
 fi
 
 if ! [[ "$OPT" =~ "-std=" ]]; then
-  if [ -n $is_c ]; then
+  if [ $is_c = 1 ]; then
     std="c11"
   else
     std="c++17"
