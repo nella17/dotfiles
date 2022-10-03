@@ -19,6 +19,7 @@ endif
 Plug 'editorconfig/editorconfig-vim'
 "
 Plug 'udalov/kotlin-vim'
+Plug 'jreybert/vimagit'
 call plug#end()
 
 " short custom config
@@ -150,6 +151,8 @@ let g:NERDToggleCheckAllLines=1
 
 " CoC
 if executable("node")
+    let g:coc_global_extensions = ['coc-clangd', 'coc-pyright']
+
     inoremap <silent><expr> <TAB>
           \ pumvisible() ? "\<C-n>" :
           \ CheckBackspace() ? "\<TAB>" :
