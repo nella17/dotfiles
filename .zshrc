@@ -154,9 +154,9 @@ if [ -f "$HOME/google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/google-cloud-sdk/
 # The next line enables shell command completion for gcloud.
 if [ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/google-cloud-sdk/completion.zsh.inc"; fi
 
-export NVM_DIR="$HOME/.nvm"
 if [ "$(uname -s)" != "Darwin" ]; then
-    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+# not macOS only
+    ;
 else
 # macOS only
     export HOMEBREW_NO_ANALYTICS=1
@@ -176,12 +176,12 @@ else
         export PATH="/usr/local/sbin${PATH+:$PATH}"
     fi
 
-    [ -s "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" ] && . "$HOMEBREW_PREFIX/opt/nvm/nvm.sh"
-
     [ -f "${HOME}/.iterm2_shell_integration.zsh" ] && . "${HOME}/.iterm2_shell_integration.zsh"
     [ -f $HOMEBREW_PREFIX/etc/profile.d/autojump.sh ] && . $HOMEBREW_PREFIX/etc/profile.d/autojump.sh
 
+    . $HOMEBREW_PREFIX/opt/asdf/lib/asdf.sh
     export PATH="$PATH:$HOMEBREW_PREFIX/opt/binutils/bin"
+    export PATH="$HOMEBREW_PREFIX/opt/bison/bin:$PATH"
 
     export PATH="$PATH:$HOME/go/bin"
     export PATH="$PATH:$HOME/.cargo/bin"
@@ -190,28 +190,6 @@ else
     export PATH="$PATH:/opt/metasploit-framework/bin"
     # export PATH="/Applications/IDA Pro 7.0/idabin:$PATH"
     export PATH="$HOME/project/bin:$PATH"
-fi
-
-if type nvm > /dev/null; then
-    # place this after nvm initialization!
-    autoload -U add-zsh-hook
-    load-nvmrc() {
-      local node_version="$(nvm version)"
-      local nvmrc_path="$(nvm_find_nvmrc)"
-      if [ -n "$nvmrc_path" ]; then
-        local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
-        if [ "$nvmrc_node_version" = "N/A" ]; then
-          nvm install
-        elif [ "$nvmrc_node_version" != "$node_version" ]; then
-          nvm use
-        fi
-      elif [ "$node_version" != "$(nvm version default)" ]; then
-        echo "Reverting to nvm default version"
-        nvm use default
-      fi
-    }
-    add-zsh-hook chpwd load-nvmrc
-    load-nvmrc
 fi
 
 if type direnv > /dev/null; then
@@ -227,3 +205,5 @@ export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 if [[ "$VIRTUAL_ENV" ]]; then
     export PATH="$VIRTUAL_ENV/bin:$PATH"
 fi
+
+[ -f "${HOME}/.zshrc.local" ] && . "${HOME}/.zshrc.local"
