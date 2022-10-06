@@ -20,6 +20,7 @@ Plug 'editorconfig/editorconfig-vim'
 "
 Plug 'udalov/kotlin-vim'
 Plug 'jreybert/vimagit'
+Plug 'tpope/vim-surround'
 call plug#end()
 
 " short custom config
@@ -151,7 +152,7 @@ let g:NERDToggleCheckAllLines=1
 
 " CoC
 if executable("node")
-    let g:coc_global_extensions = ['coc-clangd', 'coc-pyright']
+    let g:coc_global_extensions = ['coc-clangd', 'coc-pyright', 'coc-sh']
 
     inoremap <silent><expr> <TAB>
           \ pumvisible() ? "\<C-n>" :
@@ -174,3 +175,6 @@ let g:onedark_termcolors=256
 
 " rainbow
 let g:rainbow_active=1
+
+" magit
+autocmd User VimagitEnterCommit startinsert
