@@ -1,8 +1,8 @@
 " Vundle
 call plug#begin('~/.vim/plugged')
 " Nerdtree related
-Plug 'scrooloose/nerdtree'
-Plug 'scrooloose/nerdcommenter'
+Plug 'preservim/nerdtree'
+Plug 'preservim/nerdcommenter'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'ryanoasis/vim-devicons'
 " Colorscheme
@@ -121,7 +121,6 @@ let g:airline_detect_modified=1
 let g:airline_detect_paste=1
 "let g:airline#extensions#tabline#enabled = 1
 
-let g:NERDTreeGitStatusUseNerdFonts = 1
 " NERDTree
 noremap <C-n> :NERDTreeToggle<CR>
 " autocmd VimEnter * if exists(":NERDTree") | NERDTree | wincmd p
@@ -129,6 +128,9 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 let NERDTreeMinimalUI=1
 let NERDTreeShowHidden=1
 " let NERDTreeChDirMode=3
+let NERDTreeSortOrder=['\/$', '\.\(c\|cpp\|py\|md\|sh\)$' , '*', '\.swp$',  '\.bak$', '\~$']
+let NERDTreeIgnore=['\.o$', '\.lc$', '\.exe$']
+let g:NERDTreeGitStatusUseNerdFonts = 1
 
 " https://github.com/preservim/nerdtree/issues/815
 " augroup nerdtree
@@ -136,11 +138,9 @@ let NERDTreeShowHidden=1
 "   autocmd FileType nerdtree syntax clear NERDTreeFlags
 "   autocmd FileType nerdtree syntax match hideBracketsInNerdTree "\]" contained conceal containedin=ALL
 "   autocmd FileType nerdtree syntax match hideBracketsInNerdTree "\[" contained conceal containedin=ALL
-"   autocmd FileType nerdtree setlocal conceallevel=3
+"   autocmd FileType nerdtree setlocal conceallevel=1
 "   autocmd FileType nerdtree setlocal concealcursor=nvic
 " augroup END
-" let g:webdevicons_conceal_nerdtree_brackets = 0
-" let g:NERDTreeGitStatusConcealBrackets = 1
 
 " NERDCommenter
 let g:NERDSpaceDelims=1
