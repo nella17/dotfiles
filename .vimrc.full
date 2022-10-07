@@ -78,12 +78,6 @@ au Filetype php setlocal ts=4 sw=4 sts=4 et
 au BufRead,BufNewFile *.sage set filetype=python
 au BufRead,BufNewFile *.conf set filetype=conf
 
-function! Toggle_cpp()
-    s,^\(\s*\)\?,\1// ,e
-    s,^\(\s*\)\(// \?\)\{2},\1,e
-endfunc
-au filetype c,cpp noremap <leader><leader> :call Toggle_cpp()<CR>
-
 au Filetype c,cpp  noremap <F9> <ESC>:w<CR>:!run_c '%'<CR>
 au Filetype c,cpp inoremap <F9> <ESC>:w<CR>:!run_c '%'<CR>
 au Filetype c,cpp  noremap <F10> <ESC>:w<CR>:!run_c '%' 2<CR>
@@ -143,12 +137,11 @@ let g:NERDTreeGitStatusUseNerdFonts = 1
 " augroup END
 
 " NERDCommenter
-let g:NERDSpaceDelims=1
-let g:NERDCompactSexyComs=1
-let g:NERDDefaultAlign='left'
-let g:NERDCommentEmptyLines=1
-let g:NERDTrimTrailingWhitespace=1
-let g:NERDToggleCheckAllLines=1
+let g:NERDCreateDefaultMappings = 0
+let g:NERDSpaceDelims = 1
+let g:NERDCompactSexyComs = 1
+let g:NERDDefaultAlign = 'left'
+noremap <leader><leader> <Plug>NERDCommenterToggle
 
 " CoC
 if executable("node")
