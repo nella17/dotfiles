@@ -122,7 +122,7 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 let NERDTreeMinimalUI=1
 let NERDTreeShowHidden=1
 " let NERDTreeChDirMode=3
-let NERDTreeSortOrder=['\/$', '\.\(c\|cpp\|py\|md\|sh\)$' , '*', '\.swp$',  '\.bak$', '\~$']
+let NERDTreeSortOrder=['\/$', '\.\(c\|cpp\|hpp\|py\|md\|sh\)$' , '*', '\.swp$',  '\.bak$', '\~$']
 let NERDTreeIgnore=['\.o$', '\.lc$', '\.exe$']
 let g:NERDTreeGitStatusUseNerdFonts = 1
 
