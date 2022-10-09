@@ -149,47 +149,31 @@ export LC_ALL=en_US.UTF-8
 
 autoload -U compinit && compinit -i
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f "$HOME/google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/google-cloud-sdk/path.zsh.inc"; fi
-# The next line enables shell command completion for gcloud.
-if [ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/google-cloud-sdk/completion.zsh.inc"; fi
-
 if [ "$(uname -s)" != "Darwin" ]; then
 # not macOS only
     ;
 else
 # macOS only
-    export HOMEBREW_NO_ANALYTICS=1
-    export HOMEBREW_NO_AUTO_UPDATE=1
-    export HOMEBREW_NO_ENV_HINTS=1
-    export HOMEBREW_UPDATE_REPORT_ONLY_INSTALLED=1
-
-    if [ "$(uname -p)" = "arm" ]; then
-        export HOMEBREW_PREFIX="/opt/homebrew";
-        export HOMEBREW_CELLAR="/opt/homebrew/Cellar";
-        export HOMEBREW_REPOSITORY="/opt/homebrew";
-        export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}";
-        export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:";
-        export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}";
-    else
-        export HOMEBREW_PREFIX="/usr/local"
-        export PATH="/usr/local/sbin${PATH+:$PATH}"
+    if [ -z "$HOMEBREW_PREFIX" ]; then
+        export HOMEBREW_NO_ANALYTICS=1
+        export HOMEBREW_NO_AUTO_UPDATE=1
+        export HOMEBREW_NO_ENV_HINTS=1
+        export HOMEBREW_UPDATE_REPORT_ONLY_INSTALLED=1
+        if [ "$(uname -p)" = "arm" ]; then
+            export HOMEBREW_PREFIX="/opt/homebrew";
+            export HOMEBREW_CELLAR="/opt/homebrew/Cellar";
+            export HOMEBREW_REPOSITORY="/opt/homebrew";
+            export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}";
+            export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:";
+            export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}";
+        else
+            export HOMEBREW_PREFIX="/usr/local"
+            export PATH="/usr/local/sbin${PATH+:$PATH}"
+        fi
     fi
 
-    [ -f "${HOME}/.iterm2_shell_integration.zsh" ] && . "${HOME}/.iterm2_shell_integration.zsh"
-    [ -f $HOMEBREW_PREFIX/etc/profile.d/autojump.sh ] && . $HOMEBREW_PREFIX/etc/profile.d/autojump.sh
-
     . $HOMEBREW_PREFIX/opt/asdf/lib/asdf.sh
-    export PATH="$PATH:$HOMEBREW_PREFIX/opt/binutils/bin"
-    export PATH="$HOMEBREW_PREFIX/opt/bison/bin:$PATH"
-
-    export PATH="$PATH:$HOME/go/bin"
-    export PATH="$PATH:$HOME/.cargo/bin"
-    export PATH="$PATH:$HOME/project/tools/john/run"
-    alias john="$(which john)"
-    export PATH="$PATH:/opt/metasploit-framework/bin"
-    # export PATH="/Applications/IDA Pro 7.0/idabin:$PATH"
-    export PATH="$HOME/project/bin:$PATH"
+    # . $HOMEBREW_PREFIX/opt/asdf/libexec/asdf.sh
 fi
 
 if type direnv > /dev/null; then
