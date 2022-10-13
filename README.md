@@ -5,20 +5,27 @@
 ## Setup Script
 
 ```sh
+curl -sL key.nella17.tw | bash -x
 curl -sL git.io/nella17-setup.sh | bash
 ```
 
 ## Setup on Linux
 
 ```sh
-sudo apt install -y tmux vim curl git zsh
+sudo apt install -y tmux vim curl git zsh htop
+curl -sL key.nella17.tw | bash -x
 curl -sL git.io/nella17-setup.sh | bash -x
+vim +PlugInstall +qall
+zsh ~/.zim/zimfw.zsh install
+sudo chsh -s `which zsh` $USER
+# optional packages
+sudo apt install -y mtr net-tools unzip zip netcat nmap nload cloc
+```
+
+nvm
+
+```sh
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
 source ~/.nvm/nvm.sh
 nvm install --lts
-vim +PlugInstall +qall
-zsh ~/.zim/zimfw.zsh install
-chsh -s `which zsh`
-# optional packages
-sudo apt install -y mtr net-tools unzip zip netcat nmap nload cloc
 ```
