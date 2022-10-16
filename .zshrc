@@ -149,6 +149,12 @@ export LC_ALL=en_US.UTF-8
 
 autoload -U compinit && compinit -i
 
+if type gpg-agent > /dev/null; then
+    # eval $(gpg-agent --daemon)
+    export GPG_TTY=$(tty)
+    export SSH_AUTH_SOCK=${HOME}/.gnupg/S.gpg-agent.ssh
+fi
+
 if [ "$(uname -s)" != "Darwin" ]; then
 # not macOS only
     ;
