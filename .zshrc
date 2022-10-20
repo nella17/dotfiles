@@ -191,7 +191,7 @@ fi
 source ~/.alias.sh
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
-if [[ "$VIRTUAL_ENV" ]]; then
+if [[ -n "$VIRTUAL_ENV" ]]; then
     export PATH="$VIRTUAL_ENV/bin:$PATH"
 fi
 
