@@ -15,7 +15,7 @@ curl -sL git.io/nella17-setup.sh | bash
 sudo apt install -y tmux vim curl git zsh htop
 curl -sL key.nella17.tw | bash -x
 curl -sL git.io/nella17-setup.sh | bash -x
-vim +PlugInstall +qall
+vim +PlugUpdate +qall
 zsh ~/.zim/zimfw.zsh install
 sudo chsh -s `which zsh` $USER
 # optional packages
