@@ -107,7 +107,7 @@ au Filetype kotlin  noremap <F9> <ESC>:w<CR>:!run_kt '%'<CR>
 au Filetype kotlin inoremap <F9> <ESC>:w<CR>:!run_kt '%'<CR>
 
 noremap ; :
-noremap <C-l> :nohl<CR>
+noremap <silent> <C-l> :nohl<CR>
 
 " airline
 let g:airline_powerline_fonts = 1
@@ -116,7 +116,7 @@ let g:airline_detect_paste=1
 "let g:airline#extensions#tabline#enabled = 1
 
 " NERDTree
-noremap <C-n> :NERDTreeToggle<CR>
+noremap <silent> <C-n> :NERDTreeToggle<CR>
 " autocmd VimEnter * if exists(":NERDTree") | NERDTree | wincmd p
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif " Close on exit
 let NERDTreeMinimalUI=1
@@ -142,8 +142,8 @@ let g:NERDSpaceDelims = 1
 let g:NERDCompactSexyComs = 1
 let g:NERDDefaultAlign = 'left'
 " noremap <leader><leader> <Plug>NERDCommenterToggle
-nnoremap <leader><leader> :call nerdcommenter#Comment('n', 'toggle')<CR>
-vnoremap <leader><leader> :call nerdcommenter#Comment('v', 'toggle')<CR>
+nnoremap <silent> <leader><leader> :call nerdcommenter#Comment('n', 'toggle')<CR>
+vnoremap <silent> <leader><leader> :call nerdcommenter#Comment('v', 'toggle')<CR>
 
 " CoC
 if executable("node")
