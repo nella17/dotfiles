@@ -141,7 +141,9 @@ let g:NERDCreateDefaultMappings = 0
 let g:NERDSpaceDelims = 1
 let g:NERDCompactSexyComs = 1
 let g:NERDDefaultAlign = 'left'
-noremap <leader><leader> <Plug>NERDCommenterToggle
+" noremap <leader><leader> <Plug>NERDCommenterToggle
+nnoremap <leader><leader> :call nerdcommenter#Comment('n', 'toggle')<CR>
+vnoremap <leader><leader> :call nerdcommenter#Comment('v', 'toggle')<CR>
 
 " CoC
 if executable("node")
