@@ -2,8 +2,9 @@
 call plug#begin('~/.vim/plugged')
 " Nerdtree related
 Plug 'preservim/nerdtree'
-Plug 'preservim/nerdcommenter'
+Plug 'jistr/vim-nerdtree-tabs'
 Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'preservim/nerdcommenter'
 Plug 'ryanoasis/vim-devicons'
 " Colorscheme
 Plug 'vim-airline/vim-airline'
@@ -119,7 +120,8 @@ let g:airline_detect_paste=1
 "let g:airline#extensions#tabline#enabled = 1
 
 " NERDTree
-noremap <silent> <C-n> :NERDTreeToggle<CR>
+" noremap <silent> <C-n> :NERDTreeToggle<CR>
+noremap <silent> <C-n> :NERDTreeTabsToggle<CR>
 " autocmd VimEnter * if exists(":NERDTree") | NERDTree | wincmd p
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif " Close on exit
 let NERDTreeMinimalUI=1
