@@ -22,6 +22,7 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'udalov/kotlin-vim'
 Plug 'jreybert/vimagit'
 Plug 'tpope/vim-surround'
+Plug 'markonm/traces.vim'
 call plug#end()
 
 " short custom config
@@ -117,7 +118,7 @@ noremap <silent> <C-l> :nohl<CR>
 let g:airline_powerline_fonts = 1
 let g:airline_detect_modified=1
 let g:airline_detect_paste=1
-"let g:airline#extensions#tabline#enabled = 1
+" let g:airline#extensions#tabline#enabled = 1
 
 " NERDTree
 " noremap <silent> <C-n> :NERDTreeToggle<CR>
