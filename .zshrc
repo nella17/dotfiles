@@ -149,50 +149,13 @@ export LC_ALL=en_US.UTF-8
 
 autoload -U compinit && compinit -i
 
-# if type gpg-agent > /dev/null; then
-#     # eval $(gpg-agent --daemon)
-#     export GPG_TTY=$(tty)
-#     export SSH_AUTH_SOCK=${HOME}/.gnupg/S.gpg-agent.ssh
-# fi
-
-if [ "$(uname -s)" != "Darwin" ]; then
-# not macOS only
-    ;
-else
-# macOS only
-    if [ -z "$HOMEBREW_PREFIX" ]; then
-        export HOMEBREW_NO_ANALYTICS=1
-        export HOMEBREW_NO_AUTO_UPDATE=1
-        export HOMEBREW_NO_ENV_HINTS=1
-        export HOMEBREW_UPDATE_REPORT_ONLY_INSTALLED=1
-        if [ "$(uname -p)" = "arm" ]; then
-            export HOMEBREW_PREFIX="/opt/homebrew";
-            export HOMEBREW_CELLAR="/opt/homebrew/Cellar";
-            export HOMEBREW_REPOSITORY="/opt/homebrew";
-            export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}";
-            export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}";
-        else
-            export HOMEBREW_PREFIX="/usr/local"
-            export PATH="/usr/local/sbin${PATH+:$PATH}"
-        fi
-    fi
-
-    . $HOMEBREW_PREFIX/opt/asdf/lib/asdf.sh
-    # . $HOMEBREW_PREFIX/opt/asdf/libexec/asdf.sh
-fi
-
-if type direnv > /dev/null; then
-    eval "$(direnv hook zsh)"
-    if type asdf > /dev/null; then
-        source "${XDG_CONFIG_HOME:-$HOME/.config}/asdf-direnv/zshrc"
-    fi
-fi
-
 source ~/.alias.sh
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+
+source "${XDG_CONFIG_HOME:-$HOME/.config}/asdf-direnv/zshrc"
+
+[ -f "${HOME}/.zshrc.local" ] && . "${HOME}/.zshrc.local"
 
 if [[ -n "$VIRTUAL_ENV" ]]; then
     export PATH="$VIRTUAL_ENV/bin:$PATH"
 fi
-
-[ -f "${HOME}/.zshrc.local" ] && . "${HOME}/.zshrc.local"

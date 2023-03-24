@@ -26,3 +26,5 @@ zmodule zsh-users/zsh-history-substring-search
 
 zmodule romkatv/powerlevel10k --use degit
 zmodule zdharma-continuum/history-search-multi-word
+
+zmodule asdf
