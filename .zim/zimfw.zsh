@@ -57,8 +57,8 @@ _zimfw_build_init() {
     command mv -f ${ztarget}{,.old} || return 1
   fi
   _zimfw_mv =(
-    print -R "zimfw() { source ${ZIM_HOME}/zimfw.zsh \"\${@}\" }"
-    print -R "zmodule() { source ${ZIM_HOME}/zimfw.zsh \"\${@}\" }"
+    print -R "zimfw() { source ${(q-)ZIM_HOME}/zimfw.zsh \"\${@}\" }"
+    print -R "zmodule() { source ${(q-)ZIM_HOME}/zimfw.zsh \"\${@}\" }"
     local zroot_dir zpre
     local -a zif_functions zif_cmds zroot_functions zroot_cmds
     local -a zfunctions=(${_zfunctions}) zcmds=(${_zcmds})
@@ -74,7 +74,7 @@ _zimfw_build_init() {
       fi
     done
     zpre=$'*\0'
-    if (( ${#_zfpaths} )) print 'fpath=('${${_zfpaths#${~zpre}}:A}' ${fpath})'
+    if (( ${#_zfpaths} )) print 'fpath=('${(q-)${_zfpaths#${~zpre}}:A}' ${fpath})'
     if (( ${#zfunctions} )) print -R 'autoload -Uz -- '${zfunctions#${~zpre}}
     for zroot_dir in ${_zroot_dirs}; do
       zpre=${zroot_dir}$'\0'
@@ -292,11 +292,11 @@ Per-call initialization options:
         shift
         zarg=${1}
         if [[ ${zarg} != /* ]] zarg=${zroot_dir}/${zarg}
-        zcmds+=("source ${zarg:A}")
+        zcmds+=("source ${(q-)zarg:A}")
         ;;
       -c|--cmd)
         shift
-        zcmds+=(${1//{}/${zroot_dir:A}})
+        zcmds+=(${1//{}/${(q-)zroot_dir:A}})
         ;;
       -d|--disabled) _zdisabled_root_dirs+=(${zroot_dir}) ;;
       *)
@@ -324,11 +324,11 @@ Per-call initialization options:
       local -ra prezto_scripts=(${zroot_dir}/init.zsh(N))
       if (( ${#zfpaths} && ${#prezto_scripts} )); then
         # this follows the prezto module format, no need to check for other scripts
-        zcmds=('source '${^prezto_scripts:A})
+        zcmds=('source '${(q-)^prezto_scripts:A})
       else
         # get script with largest size (descending `O`rder by `L`ength, and return only `[1]` first)
         local -ra zscripts=(${zroot_dir}/(init.zsh|(${zname:t}|${zroot_dir:t}).(zsh|plugin.zsh|zsh-theme|sh))(NOL[1]))
-        zcmds=('source '${^zscripts:A})
+        zcmds=('source '${(q-)^zscripts:A})
       fi
     fi
     if (( ! ${#zfpaths} && ! ${#zfunctions} && ! ${#zcmds} )); then
@@ -402,25 +402,7 @@ _zimfw_version_check() {
 }
 
 _zimfw_check_dumpfile() {
-  local zdumpfile zfpath zline
-  zstyle -s ':zim:completion' dumpfile 'zdumpfile' || zdumpfile=${ZDOTDIR:-${HOME}}/.zcompdump
-  if [[ -e ${zdumpfile} ]]; then
-    if (( ${+_zim_dumpfile_fpath} )); then
-      local -r zcomps=(${^_zim_dumpfile_fpath}/^([^_]*|*~|*.zwc(|.old))(N:t))
-      IFS=$' \t' read -rA zline < ${zdumpfile} || return 1
-      if [[ ${zline[2]} -eq ${#zcomps} && ${zline[4]} == ${ZSH_VERSION} ]]; then
-        _zimfw_print -PR "%F{green})%f %B${zdumpfile}:%b Already up to date"
-      else
-        _zimfw_print -PR "%F{green})%f %B${zdumpfile}:%b New completion configuration needs to be dumped. Will do %Bclean-dumpfile%b."
-        _zimfw_clean_dumpfile
-      fi
-    else
-      _zimfw_print -u2 -PR "%F{yellow}! %B${zdumpfile}:%b Unable to check. This only works when the completion module is initialized."
-    fi
-  else
-    _zimfw_print -PR "%F{green})%f %B${zdumpfile}:%b Not found"
-  fi
-  _zimfw_print 'Done with check-dumpfile.'
+  _zimfw_print -u2 -PR '%F{yellow}! Deprecated action. This is now handled by the completion module alone.'
 }
 
 _zimfw_clean_compiled() {
@@ -436,7 +418,7 @@ _zimfw_clean_dumpfile() {
   local zdumpfile zopt
   zstyle -s ':zim:completion' dumpfile 'zdumpfile' || zdumpfile=${ZDOTDIR:-${HOME}}/.zcompdump
   if (( _zprintlevel > 0 )) zopt=-v
-  command rm -f ${zopt} ${zdumpfile}(|.zwc(|.old))(N) && \
+  command rm -f ${zopt} ${zdumpfile}(|.dat|.zwc(|.old))(N) && \
       _zimfw_print -P "Done with clean-dumpfile.${_zrestartmsg}"
 }
 
@@ -454,7 +436,7 @@ _zimfw_compile() {
 }
 
 _zimfw_info() {
-  print -R 'zimfw version:        '${_zversion}' (built at 2023-02-04 14:46:47 UTC, previous commit is 7778e97)'
+  print -R 'zimfw version:        '${_zversion}' (built at 2023-02-26 00:43:41 UTC, previous commit is 6a24459)'
   print -R 'OSTYPE:               '${OSTYPE}
   print -R 'TERM:                 '${TERM}
   print -R 'TERM_PROGRAM:         '${TERM_PROGRAM}
@@ -584,7 +566,7 @@ _zimfw_run_tool() {
     degit) zcmd="# This runs in a new shell
 builtin emulate -L zsh -o EXTENDED_GLOB
 readonly -i PRINTLEVEL=\${1} SUBMODULES=\${8}
-readonly ACTION=\${2} MODULE=\${3} DIR=\${4} URL=\${5} REV=\${7} ONPULL=\${9} TEMP=.zdegit_\${RANDOM}
+readonly ACTION=\${2} MODULE=\${3} DIR=\${4} URL=\${5} REV=\${7} ONPULL=\${9} TEMP=.zdegit_\${sysparams[pid]}
 readonly TARBALL_TARGET=\${DIR}/\${TEMP}_tarball.tar.gz INFO_TARGET=\${DIR}/.zdegit
 
 print_error() {
@@ -841,12 +823,11 @@ esac
 
 zimfw() {
   builtin emulate -L zsh -o EXTENDED_GLOB
-  local -r _zversion='1.11.1' zusage="Usage: %B${0}%b <action> [%B-q%b|%B-v%b]
+  local -r _zversion='1.11.3' zusage="Usage: %B${0}%b <action> [%B-q%b|%B-v%b]
 
 Actions:
   %Bbuild%b           Build %B${ZIM_HOME}/init.zsh%b and %B${ZIM_HOME}/login_init.zsh%b.
-                  Also does %Bcheck-dumpfile%b and %Bcompile%b. Use %B-v%b to also see their output.
-  %Bcheck-dumpfile%b  Does %Bclean-dumpfile%b if new completion configuration needs to be dumped.
+                  Also does %Bcompile%b. Use %B-v%b to also see its output.
   %Bclean%b           Clean all. Does both %Bclean-compiled%b and %Bclean-dumpfile%b.
   %Bclean-compiled%b  Clean Zsh compiled files.
   %Bclean-dumpfile%b  Clean completion dumpfile.
@@ -856,16 +837,16 @@ Actions:
   %Blist%b            List all modules currently defined in %B${ZIM_CONFIG_FILE:-${ZDOTDIR:-${HOME}}/.zimrc}%b.
                   Use %B-v%b to also see the modules details.
   %Binit%b            Same as %Binstall%b, but with output tailored to be used at terminal startup.
-  %Binstall%b         Install new modules. Also does %Bbuild%b, %Bcheck-dumpfile%b and %Bcompile%b. Use %B-v%b to
-                  also see their output, any on-pull output, and see skipped modules.
+  %Binstall%b         Install new modules. Also does %Bbuild%b, %Bcompile%b. Use %B-v%b to also see their
+                  output, any on-pull output and skipped modules.
   %Buninstall%b       Delete unused modules. Prompts for confirmation. Use %B-q%b for quiet uninstall.
-  %Bupdate%b          Update current modules. Also does %Bbuild%b, %Bcheck-dumpfile%b and %Bcompile%b. Use %B-v%b
-                  to also see their output, any on-pull output, and see skipped modules.
+  %Bupdate%b          Update current modules. Also does %Bbuild%b, %Bcompile%b. Use %B-v%b to also see their
+                  output, any on-pull output and skipped modules.
   %Bupgrade%b         Upgrade zimfw. Also does %Bcompile%b. Use %B-v%b to also see its output.
   %Bversion%b         Print zimfw version.
 
 Options:
-  %B-q%b              Quiet (yes to prompts, and only outputs errors)
+  %B-q%b              Quiet (yes to prompts and only outputs errors)
   %B-v%b              Verbose (outputs more details)"
   local -Ua _znames _zroot_dirs _zdisabled_root_dirs
   local -A _zfrozens _ztools _zdirs _zurls _ztypes _zrevs _zsubmodules _zonpulls _zifs
@@ -894,9 +875,9 @@ Options:
     build)
       _zimfw_source_zimrc 2 && _zimfw_build || return 1
       (( _zprintlevel-- ))
-      _zimfw_check_dumpfile && _zimfw_compile
+      _zimfw_compile
       ;;
-    check-dumpfile) _zimfw_source_zimrc 2 && _zimfw_check_dumpfile ;;
+    check-dumpfile) _zimfw_check_dumpfile ;;
     clean) _zimfw_source_zimrc 2 && _zimfw_clean_compiled && _zimfw_clean_dumpfile ;;
     clean-compiled) _zimfw_source_zimrc 2 && _zimfw_clean_compiled ;;
     clean-dumpfile) _zimfw_clean_dumpfile ;;
@@ -912,13 +893,13 @@ Options:
       _zimfw_install_update install || return 1
       (( _zprintlevel-- ))
       _zimfw_print -PR "Done with install.${_zrestartmsg}" # Only printed in verbose mode
-      _zimfw_source_zimrc 2 && _zimfw_build && _zimfw_check_dumpfile && _zimfw_compile
+      _zimfw_source_zimrc 2 && _zimfw_build && _zimfw_compile
       ;;
     install|update)
       _zimfw_install_update ${1} || return 1
       _zimfw_print -PR "Done with ${1}.${_zrestartmsg}"
       (( _zprintlevel-- ))
-      _zimfw_source_zimrc 2 && _zimfw_build && _zimfw_check_dumpfile && _zimfw_compile
+      _zimfw_source_zimrc 2 && _zimfw_build && _zimfw_compile
       ;;
     uninstall) _zimfw_source_zimrc 2 && _zimfw_list_unuseds && _zimfw_uninstall ;;
     upgrade)
