@@ -23,7 +23,9 @@ Plug 'udalov/kotlin-vim'
 Plug 'jreybert/vimagit'
 Plug 'tpope/vim-surround'
 Plug 'markonm/traces.vim'
-Plug 'ojroques/vim-oscyank'
+if !empty($SSH_CLIENT)
+    Plug 'ojroques/vim-oscyank'
+endif
 call plug#end()
 
 " short custom config
@@ -228,10 +230,12 @@ let g:rainbow_active=1
 autocmd User VimagitEnterCommit startinsert
 
 " vim-oscyank
-if !empty($TMUX)
-    let g:oscyank_osc52 = "\ePtmux;\e\e]52;c;%s\x07\e\\"
+if !empty($SSH_CLIENT)
+    if !empty($TMUX)
+        let g:oscyank_osc52 = "\ePtmux;\e\e]52;c;%s\x07\e\\"
+    endif
+    autocmd TextYankPost *
+        \ if v:event.operator is 'y' && v:event.regname is '' |
+        \ execute 'OSCYankRegister' |
+        \ endif
 endif
-autocmd TextYankPost *
-    \ if v:event.operator is 'y' && v:event.regname is '' |
-    \ execute 'OSCYankRegister' |
-    \ endif
