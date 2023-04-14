@@ -49,7 +49,7 @@ function dotfiles-update() {
   done
 }
 
-alias edit-hosts='sudo /usr/bin/vim --clean -Z /etc/hosts'
+alias edit-hosts='sudo /usr/bin/rvim /etc/hosts'
 
 # macOS only
 if [ "$(uname -s)" = "Darwin" ]; then
