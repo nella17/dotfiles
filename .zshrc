@@ -152,8 +152,6 @@ autoload -U compinit && compinit -i
 source ~/.alias.sh
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
-source "${XDG_CONFIG_HOME:-$HOME/.config}/asdf-direnv/zshrc"
-
 [ -f "${HOME}/.zshrc.local" ] && . "${HOME}/.zshrc.local"
 
 if [[ -n "$VIRTUAL_ENV" ]]; then
