@@ -40,8 +40,6 @@
     ff = only
 [push]
     default = current
-[commit]
-    gpgsign = true
 [filter "lfs"]
     required = true
     clean = git-lfs clean -- %f
