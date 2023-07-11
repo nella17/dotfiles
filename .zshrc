@@ -147,7 +147,7 @@ setopt NULL_GLOB
 
 export LC_ALL=en_US.UTF-8
 
-autoload -U compinit && compinit -i
+# autoload -U compinit && compinit -i
 
 source ~/.alias.sh
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
