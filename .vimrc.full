@@ -10,7 +10,7 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'vim-airline/vim-airline'
 Plug 'joshdick/onedark.vim'
 " fuzz
-Plug 'ctrlpvim/ctrlp.vim'
+Plug 'junegunn/fzf'
 " Coding Utils
 " Plug 'Yggdroot/indentLine'
 Plug 'luochen1990/rainbow'
@@ -23,7 +23,7 @@ Plug 'udalov/kotlin-vim'
 Plug 'jreybert/vimagit'
 Plug 'tpope/vim-surround'
 Plug 'markonm/traces.vim'
-if !empty($SSH_CLIENT)
+if exists('$SSH_CLIENT')
     Plug 'ojroques/vim-oscyank'
 endif
 call plug#end()
@@ -216,6 +216,13 @@ if executable("node")
     xmap <silent> <C-s> <Plug>(coc-range-select)
 endif
 
+" fzf
+if exists('$TMUX')
+  let g:fzf_layout = { 'tmux': '-p90%,60%' }
+else
+  let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
+endif
+
 " Indent Guide
 " let g:indentLine_setColors = 0
 " let g:indentLine_char_list=['|', '¦', '┆', '┊']
@@ -230,8 +237,8 @@ let g:rainbow_active=1
 autocmd User VimagitEnterCommit startinsert
 
 " vim-oscyank
-if !empty($SSH_CLIENT)
-    if !empty($TMUX)
+if exists('$SSH_CLIENT')
+    if exists('$TMUX')
         let g:oscyank_osc52 = "\ePtmux;\e\e]52;c;%s\x07\e\\"
     endif
     autocmd TextYankPost *
