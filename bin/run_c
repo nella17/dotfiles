@@ -3,7 +3,7 @@ set -euo pipefail
 fn=${1?"need file name"}
 o=${2:-2}
 
-if [ ${fn##*.} = "c" ]; then
+if [ "${fn##*.}" = "c" ]; then
   is_c=1
   CC=gcc
 else
@@ -12,20 +12,19 @@ else
 fi
 
 if [ "$(uname -s)" = "Darwin" ]; then
-  if command -v $CC-12 &> /dev/null; then
-    CC=$CC-12
+  TCC="$(printf 'exit; g++-\t' | bash -i 2>&1 | tr ' ' '\n' | grep g++)"
+  if command -v "$TCC" &> /dev/null; then
+    CC="$TCC"
   fi
 fi
 
 ARGS=("")
-DEBUG=0
 case $o in
 3)
   ARGS+=("-fsanitize=address" "-fsanitize=undefined")
   ;&
 2)
-  DEBUG=1
-  ARGS+=("-DDEBUG")
+  ARGS+=("-DDEBUG" "-g")
   ;&
 1)
   ARGS+=("-D_GLIBCXX_DEBUG" "-D_GLIBCXX_DEBUG_PEDANTIC")
@@ -34,7 +33,7 @@ esac
 
 OPT=""
 if [ $# -ge 3 ]; then
-  OPT="$(echo $* | cut -d ' ' -f 3-)"
+  OPT="$(echo "$*" | cut -d ' ' -f 3-)"
 fi
 
 if ! [[ "$OPT" =~ "-std=" ]]; then
@@ -46,20 +45,21 @@ if ! [[ "$OPT" =~ "-std=" ]]; then
   ARGS+=("-std=$std")
 fi
 
-ARGS="${ARGS[*]} $OPT"
+ARGSs="${ARGS[*]} $OPT"
 
-file_name="$(sha1sum "$1" | awk '{print $1}')-$(echo "$ARGS" | sha1sum | awk '{print $1}').out"
+file_name="$(sha1sum "$1" | awk '{print $1}')-$(echo "$ARGSs" | sha1sum | awk '{print $1}').out"
 dir='/tmp/run_c'
 mkdir -p $dir
 file="$dir/$file_name"
 
->&2 echo \$ARGS=\'"$ARGS"\'
->&2 echo $file
+>&2 echo \$ARGS=\'"$ARGSs"\'
+>&2 echo "$file"
 if [ -e "$file" ]; then
   time >&2 echo "cached file exist!"
 else
   set -eux
-  time $CC $ARGS -Wall -Wextra -Wshadow \
+  # shellcheck disable=SC2086
+  time $CC $ARGSs -Wall -Wextra -Wshadow \
     -Wconversion "$fn" -o "$file"
 fi
 >&2 echo 
