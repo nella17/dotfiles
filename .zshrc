@@ -154,6 +154,10 @@ export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
 [ -f "${HOME}/.zshrc.local" ] && . "${HOME}/.zshrc.local"
 
+if type zoxide > /dev/null; then
+    eval "$(zoxide init zsh)"
+fi
+
 if [[ -n "$VIRTUAL_ENV" ]]; then
     export PATH="$VIRTUAL_ENV/bin:$PATH"
 fi
