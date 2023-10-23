@@ -11,14 +11,17 @@ else
   CC=g++
 fi
 
+ARGS=()
+
 if [ "$(uname -s)" = "Darwin" ]; then
-  TCC="$(printf 'exit; g++-\t' | bash -i 2>&1 | tr ' ' '\n' | grep g++)"
+  ARGS+=("-Wl,-ld_classic")
+  export HISTFILE=/dev/null
+  TCC="$(printf ' exit; g++-\t' | bash -i 2>&1 | tr ' ' '\n' | grep g++)"
   if command -v "$TCC" &> /dev/null; then
     CC="$TCC"
   fi
 fi
 
-ARGS=("")
 case $o in
 3)
   ARGS+=("-fsanitize=address" "-fsanitize=undefined")
