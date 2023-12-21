@@ -16,7 +16,7 @@ ARGS=()
 if [ "$(uname -s)" = "Darwin" ]; then
   ARGS+=("-Wl,-ld_classic")
   export HISTFILE=/dev/null
-  TCC="$(printf ' exit; g++-\t' | bash -i 2>&1 | tr ' ' '\n' | grep g++)"
+  TCC="$(printf ' exit; %s-1\t' "$CC" | bash -i 2>&1 | tr ' ' '\n' | grep "$CC")"
   if command -v "$TCC" &> /dev/null; then
     CC="$TCC"
   fi
@@ -41,9 +41,9 @@ fi
 
 if ! [[ "$OPT" =~ "-std=" ]]; then
   if [ $is_c = 1 ]; then
-    std="c11"
+    std="gnu11"
   else
-    std="c++17"
+    std="c++20"
   fi
   ARGS+=("-std=$std")
 fi
