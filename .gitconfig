@@ -30,9 +30,9 @@
     cm = commit
     unstage = reset HEAD --
     last = log -1 HEAD
-    ll = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
-    ll1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold yellow)(%ar)%C(auto)%d%C(reset)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
-    ll2 = log --oneline --graph --decorate --all
+    ll = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'
+    ll1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold yellow)(%ar)%C(auto)%d%C(reset)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'
+    ll2 = log --oneline --graph --decorate
     in = "!git init; if [[ ! -f \"README.md\" ]]; then echo \"# ${PWD##*/}\" >> README.md; fi; if [[ ! -f \".gitignore\" ]]; then cp ~/.gitignore_template .gitignore; fi; git add README.md .gitignore"
 [i18n]
     commitencoding = utf-8
