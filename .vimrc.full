@@ -26,7 +26,12 @@ Plug 'markonm/traces.vim'
 if exists('$SSH_CLIENT')
     Plug 'ojroques/vim-oscyank'
 endif
+" Format
+Plug 'google/vim-maktaba'
+Plug 'google/vim-codefmt'
+Plug 'google/vim-glaive'
 call plug#end()
+call glaive#Install()
 
 " short custom config
 set nocp nu rnu cul noswf sc nosmd
@@ -249,3 +254,12 @@ if exists('$SSH_CLIENT')
         \ execute 'OSCYankRegister' |
         \ endif
 endif
+
+" format
+Glaive codefmt plugin[mappings]
+augroup autoformat_settings
+  autocmd FileType c,cpp,proto,javascript,arduino AutoFormatBuffer clang-format
+  autocmd FileType go AutoFormatBuffer gofmt
+  autocmd FileType python AutoFormatBuffer yapf
+  " Alternative: autocmd FileType python AutoFormatBuffer autopep8
+augroup END
