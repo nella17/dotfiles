@@ -11,6 +11,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'joshdick/onedark.vim'
 " fuzz
 Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
 " Coding Utils
 " Plug 'Yggdroot/indentLine'
 Plug 'luochen1990/rainbow'
@@ -160,7 +161,7 @@ nnoremap <silent> <leader><leader> :call nerdcommenter#Comment('n', 'toggle')<CR
 vnoremap <silent> <leader><leader> :call nerdcommenter#Comment('v', 'toggle')<CR>
 
 " FZF
-noremap <silent> <C-p> :FZF<CR>
+noremap <silent> <C-p> :Files<CR>
 
 " CoC
 if executable("node")
