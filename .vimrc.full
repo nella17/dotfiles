@@ -165,7 +165,7 @@ noremap <silent> <C-p> :Files<CR>
 
 " CoC
 if executable("node")
-    let g:coc_global_extensions = ['coc-clangd', 'coc-pyright', 'coc-sh', 'coc-java']
+    let g:coc_global_extensions = ['coc-clangd', 'coc-pyright', 'coc-sh']
 
     inoremap <silent><expr> <TAB>
           \ coc#pum#visible() ? coc#pum#next(1) :
