@@ -1,8 +1,12 @@
 #!/bin/sh
-if [ $# = 0 ]; then
-    openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//'
+interface=${1?"interface"}
+if [ $# = 1 ]; then
+  newmac=$(openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//')
 else
-    sudo ifconfig $1 ether $($0)
-    sleep 0.1
-    ifconfig $1
+  newmac=$2
 fi
+networksetup -setairportpower $interface on
+sudo ifconfig $interface ether $newmac
+networksetup -detectnewhardware
+sleep 0.1
+ifconfig $interface

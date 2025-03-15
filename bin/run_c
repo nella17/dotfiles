@@ -11,7 +11,7 @@ else
   CC=g++
 fi
 
-ARGS=()
+ARGS=("-Wl,-stack_size,0x20000000")
 
 if [ "$(uname -s)" = "Darwin" ]; then
   ARGS+=("-Wl,-ld_classic")
@@ -27,7 +27,7 @@ case $o in
   ARGS+=("-fsanitize=address" "-fsanitize=undefined")
   ;&
 2)
-  ARGS+=("-DDEBUG" "-g")
+  ARGS+=("-DDEBUG" "-Dlocal" "-g")
   ;&
 1)
   ARGS+=("-D_GLIBCXX_DEBUG" "-D_GLIBCXX_DEBUG_PEDANTIC")
@@ -43,10 +43,12 @@ if ! [[ "$OPT" =~ "-std=" ]]; then
   if [ $is_c = 1 ]; then
     std="gnu11"
   else
-    std="c++20"
+    std="c++23"
   fi
   ARGS+=("-std=$std")
 fi
+
+ARGS+=("-I$HOME/project/coding/ac-library")
 
 ARGSs="${ARGS[*]} $OPT"
 
