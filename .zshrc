@@ -146,7 +146,7 @@ export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
 [ -f "${HOME}/.zshrc.local" ] && . "${HOME}/.zshrc.local"
 
-if type zoxide > /dev/null; then
+if type starship > /dev/null; then
     eval "$(starship init zsh)"
 fi
 
