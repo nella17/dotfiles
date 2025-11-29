@@ -16,6 +16,8 @@ if [ $? != 0 ]; then
   dotfiles checkout
 fi
 dotfiles config status.showUntrackedFiles no
+dotfiles config branch.main.remote origin
+dotfiles config branch.main.merge refs/heads/main
 cat $HOME/.gitignore_home | while read f; do
   mv $HOME/$f $HOME/.dotfiles/$f
   dotfiles update-index --assume-unchanged $HOME/$f
