@@ -41,17 +41,11 @@ fi
 exist=$($DOCKER ps -q -f "name=$name")
 already_run=$(pgrep -af "$DOCKER run" | grep -c "$name")
 
-if [ -n "$use_podman" ]; then
-  mount="$PWD:/data:z"
-else
-  mount="$PWD:/data"
-fi
-
 if [[ ! $exist ]] && [[ $already_run -eq 0 ]]; then
   >&2 echo -n 'start container: '
   $DOCKER run --rm -dt \
     --name "$name" \
-    -v "$mount" \
+    -v "$PWD:/data${use_podman:+:z}" \
     --cap-add=SYS_PTRACE \
     --security-opt seccomp=unconfined \
     $args \
@@ -62,7 +56,7 @@ $DOCKER exec -it -w '/data' "$name" zsh -c "source ~/.zshrc && $cmd"
 
 count=$(pgrep -af "$name" | wc -l)
 exist=$($DOCKER ps -q -f "name=$name")
-if [[ "$count" -eq 0 ]] && [[ "$exist" ]]; then
+if [[ "$count" -eq ${use_podman:+1:-0} ]] && [[ "$exist" ]]; then
   >&2 echo -n 'shutdown container: '
   $DOCKER stop "$name"
 fi
