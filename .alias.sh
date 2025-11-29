@@ -41,12 +41,13 @@ alias rc=run_c
 # git
 alias dotfiles='git --git-dir=$HOME/.dotfiles/.git/ --work-tree=$HOME'
 function dotfiles-update() {
-  dotfiles reset HEAD --hard
+  dotfiles stash
   dotfiles pull
   cat $HOME/.gitignore_home | while read f; do
     rm -f $HOME/$f
     dotfiles update-index --assume-unchanged $HOME/$f
   done
+  dotfiles stash pop
 }
 
 alias edit-hosts='sudo /usr/bin/rvim /etc/hosts'
