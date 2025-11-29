@@ -1,9 +1,0 @@
-#!/bin/bash
-# set -x
-f='@'
-if [ "$1" = 'hex' ]; then
-  f='-C 0123456789abcdef'
-  shift
-fi
-c=${1:-32}
-base64 < /dev/urandom 2>/dev/null | tr -d '/+' | tr -d $f | head -c "$c"
