@@ -50,7 +50,7 @@ if [[ ! $exist ]] && [[ $already_run -eq 0 ]]; then
     --cap-add=SYS_PTRACE \
     --security-opt seccomp=unconfined \
     $args \
-    nella17/vm:$version \
+    docker.io/nella17/vm:$version \
     sleep infinity
 fi
 
