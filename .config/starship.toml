@@ -1,0 +1,2 @@
+[gcloud]
+detect_env_vars = ['CLOUDSDK_CONFIG']
