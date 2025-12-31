@@ -25,5 +25,6 @@ zmodule zsh-users/zsh-syntax-highlighting
 zmodule zsh-users/zsh-history-substring-search
 
 zmodule Aloxaf/fzf-tab
+zmodule zdharma-continuum/fast-syntax-highlighting
 
 zmodule joke/zim-mise
