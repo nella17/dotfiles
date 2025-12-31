@@ -146,6 +146,10 @@ export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
 [ -f "${HOME}/.zshrc.local" ] && . "${HOME}/.zshrc.local"
 
+if type fzf > /dev/null; then
+    eval "$(fzf --zsh)"
+fi
+
 if type starship > /dev/null; then
     eval "$(starship init zsh)"
 fi
