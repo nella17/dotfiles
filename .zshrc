@@ -136,6 +136,7 @@ setopt HIST_REDUCE_BLANKS
 
 setopt clobber
 setopt NULL_GLOB
+unsetopt EXTENDED_GLOB
 
 export LC_ALL=en_US.UTF-8
 
@@ -156,6 +157,16 @@ fi
 
 if type zoxide > /dev/null; then
     eval "$(zoxide init zsh)"
+fi
+
+if type yazi > /dev/null; then
+    function y() {
+        local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+        command yazi "$@" --cwd-file="$tmp"
+        IFS= read -r -d '' cwd < "$tmp"
+        [ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd"
+        rm -f -- "$tmp"
+    }
 fi
 
 if [[ -n "$VIRTUAL_ENV" ]]; then
